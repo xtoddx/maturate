@@ -148,31 +148,31 @@ module Maturate
     setup_request_handling kls
   end
 
-  def api_versions= ary
-    @@api_versions = ary
-  end
-
   def current_api_version= str
-    unless @@api_versions.include?(str)
+    unless api_versions.include?(str)
       msg = "#{str} is not a known version. Known: #{api_versions}. " +
             "Use `self.api_versions = [...]` to set known versions."
       raise InvalidVersion, msg
     end
-    @@current_api_version = str
+    self._current_api_version = str
+  end
+
+  def skip_versioned_url_generation opts={}
+    prepend_before_action :skip_versioned_url_generation, opts
   end
 
   private
 
   def self.setup_api_versioning kls
-    kls.send :mattr_reader, :api_versions
+    kls.send :mattr_accessor, :api_versions, instance_accessor: false
     @@api_versions = []
-    kls.send :mattr_reader, :current_api_version
+    kls.send :mattr_accessor, :_current_api_version, instance_accessor: false
     kls.helper_method :api_version
   end
 
   def self.setup_request_handling kls
     kls.before_action :set_api_version_variant
-    kls.before_action :set_api_default_url_param
+    kls.before_action :set_api_version_default_url_param
     kls.after_action :reset_url_versioning
   end
 
@@ -201,6 +201,10 @@ module Maturate
     #     end
     def skip_versioned_url_generation
       @_skip_versioned_url_generation = true
+    end
+
+    def current_api_version
+      self.class._current_api_version || api_versions.last
     end
 
     private

@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   extend Maturate
+  self.api_versions = ['v1', 'v2']
 end
