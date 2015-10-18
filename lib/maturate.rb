@@ -158,7 +158,7 @@ module Maturate
             "Use `self.api_versions = [...]` to set known versions."
       raise InvalidVersion, msg
     end
-    @@current_api_version = 
+    @@current_api_version = str
   end
 
   private
