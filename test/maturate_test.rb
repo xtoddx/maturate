@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class MaturateTest < ActiveSupport::TestCase
-  test "truth" do
-    assert_kind_of Module, Maturate
+  test 'can set api version on controller' do
+    assert ApplicationController.respond_to?(:api_versions=)
   end
 end

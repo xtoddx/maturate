@@ -163,11 +163,11 @@ module Maturate
 
   private
 
-  def self.setup_api_versioning
+  def self.setup_api_versioning kls
     kls.send :mattr_reader, :api_versions
     @@api_versions = []
     kls.send :mattr_reader, :current_api_version
-    helper_method :api_version
+    kls.helper_method :api_version
   end
 
   def self.setup_request_handling kls
