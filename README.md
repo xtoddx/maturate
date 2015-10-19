@@ -51,7 +51,7 @@ Instead of making our future-selves unhappy we want to:
 * reduce copy-pasting of code
 * not replay the same change/refactor over-and-over when once will suffice
 
-## Don't build apps that resist refacoring.
+## Don't build apps that resist refactoring.
 
 Just don't do it. Ever.
 
